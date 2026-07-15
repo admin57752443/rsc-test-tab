@@ -3,8 +3,10 @@
 <head>
   <meta charset="utf-8">
   <title>タブの設定</title>
-  https://res.cdn.office.net/teams-js/2.30.0/js/MicrosoftTeams.min.jsscript>
+
+  <script src="https://res.cdn.office.net/teams-js/2.30.0/js/MicrosoftTeams.min.js"></script>
 </head>
+
 <body>
   <h2>RSC 検証用アプリ</h2>
   <p>このアプリをチームに追加します。</p>
@@ -13,28 +15,37 @@
     const tabUrl =
       "https://admin57752443.github.io/rsc-test-tab/tab.html";
 
-    microsoftTeams.app.initialize().then(function () {
+    microsoftTeams.app.initialize()
+      .then(function () {
 
-      microsoftTeams.pages.config.registerOnSaveHandler(
-        function (saveEvent) {
+        microsoftTeams.pages.config.registerOnSaveHandler(
+          function (saveEvent) {
 
-          microsoftTeams.pages.config.setConfig({
-            entityId: "rsc-test-tab",
-            suggestedDisplayName: "RSC 検証",
-            contentUrl: tabUrl,
-            websiteUrl: tabUrl
-          })
-          .then(function () {
-            saveEvent.notifySuccess();
-          })
-          .catch(function (error) {
-            saveEvent.notifyFailure(error.message);
-          });
-        }
-      );
+            microsoftTeams.pages.config.setConfig({
+              entityId: "rsc-test-tab",
+              suggestedDisplayName: "RSC 検証",
+              contentUrl: tabUrl,
+              websiteUrl: tabUrl
+            })
+            .then(function () {
+              saveEvent.notifySuccess();
+            })
+            .catch(function (error) {
+              saveEvent.notifyFailure(error.message);
+            });
+          }
+        );
 
-      microsoftTeams.pages.config.setValidityState(true);
-    });
+        microsoftTeams.pages.config.setValidityState(true);
+      })
+      .catch(function (error) {
+        document.body.insertAdjacentHTML(
+          "beforeend",
+          '<p style="color:red;">Teams SDK の初期化に失敗しました: '
+            + error.message +
+          '</p>'
+        );
+      });
   </script>
 </body>
 </html>
