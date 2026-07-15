@@ -3,14 +3,24 @@
 <head>
   <meta charset="utf-8">
   <title>RSC 検証用アプリ</title>
-  https://res.cdn.office.net/teams-js/2.30.0/js/MicrosoftTeams.min.jsscript>
+
+  <script src="https://res.cdn.office.net/teams-js/2.30.0/js/MicrosoftTeams.min.js"></script>
 </head>
+
 <body>
   <h2>RSC 検証用アプリ</h2>
   <p>チームへのアプリ追加が完了しました。</p>
 
   <script>
-    microsoftTeams.app.initialize();
+    microsoftTeams.app.initialize()
+      .catch(function (error) {
+        document.body.insertAdjacentHTML(
+          "beforeend",
+          '<p style="color:red;">Teams SDK の初期化に失敗しました: '
+          + error.message
+          + '</p>'
+        );
+      });
   </script>
 </body>
 </html>
